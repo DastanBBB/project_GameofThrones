@@ -16,19 +16,84 @@ document.querySelector('#gmail_button').addEventListener("click", function () {
 });
 
 
-// -------MOVE BLOCK------
+
+// -------MOVE BLOCK part2------
 const  childBlock = document.querySelector('.child_block');
 const  parentBlock = document.querySelector('.parent_block');
 
-let  positon = 0;
+let  positonX = 0, positionY = 0;
+let direction = 'right';
 const  speed = 2;
 
 function moveBlock() {
-    if (positon <= parentBlock.clientWidth - childBlock.clientWidth) {
-        childBlock.style.left = `${positon}px`;
-        positon += speed;
-        requestAnimationFrame(moveBlock);
+    if (direction === 'right') {
+        if (positonX < parentBlock.clientWidth - childBlock.clientWidth) {
+            positonX += speed;
+        } else {
+            direction = 'down';
+        }
+    } else if (direction === 'down') {
+        if (positionY < parentBlock.clientHeight - childBlock.clientHeight) {
+            positionY += speed;
+        } else {
+            direction = 'left';
+        }
+    } else if (direction === 'left') {
+        if (positonX > 0) {
+            positonX -= speed;
+        } else {
+            direction = 'up';
+        }
+    } else if (direction === 'up') {
+        if (positionY > 0) {
+            positionY -= speed;
+        } else {
+            direction = 'right';
+        }
+    }
+    childBlock.style.left = `${positonX}px`;
+    childBlock.style.top = `${positionY}px`;
+
+    requestAnimationFrame(moveBlock);
+}
+
+moveBlock();
+
+
+
+// --------STOP WATCH--------
+const startButton = document.querySelector('#start');
+const stopButton = document.querySelector('#stop');
+const resetButton = document.querySelector('#reset');
+const display = document.querySelector('#seconds');
+
+let counter = 0;
+let intervalId = null;
+
+// Запуск счетчика
+function startCounter() {
+    if (!intervalId) {
+        intervalId = setInterval(() => {
+            counter += 1;
+            display.innerHTML = counter;
+        }, 1000);
     }
 }
-moveBlock();
+
+// Остановка счетчика
+function stopCounter() {
+    clearInterval(intervalId);
+    intervalId = null;
+}
+
+function resetCounter() {
+    stopCounter();
+    counter = 0; // Обнуляем
+    display.innerHTML = counter;
+}
+
+startButton.addEventListener('click', startCounter);
+stopButton.addEventListener('click', stopCounter);
+resetButton.addEventListener('click', resetCounter);
+
 
