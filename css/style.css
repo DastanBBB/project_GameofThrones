@@ -172,13 +172,13 @@
     top: 0;
     left: 0;
     z-index: 2;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(10px);
     display: none;
 }
 
 .modal_dialog {
-    max-width: 500px;
+    max-width: 600px;
     margin: 200px auto;
 }
 
@@ -186,17 +186,22 @@
     position: relative;
     width: 100%;
     padding: 40px;
-    background-color: black;
-    border: 2px solid var(--orange);
-    border-radius: 4px;
+    background-color: #1b1b1b;
+    border: 3px solid #d4af37;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
     max-height: 80vh;
     overflow-y: auto;
+    background-image: url("https://grizly.club/uploads/posts/2023-01/1673377348_grizly-club-p-besshovnaya-tekstura-kamnya-dlya-fotoshopa-1.jpg");
+    background-size: cover;
+    background-blend-mode: overlay;
 }
 
 .modal_content form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: #fff;
 }
 
 .modal_close {
@@ -204,25 +209,58 @@
     top: 8px;
     right: 14px;
     font-size: 30px;
-    color: red;
-    opacity: 0.5;
+    color: #d4af37;
+    opacity: 0.8;
     font-weight: 700;
     border: none;
     background-color: transparent;
     cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal_close:hover {
+    color: #ff4500;
 }
 
 .modal_title {
     text-align: center;
-    font-size: 22px;
+    font-size: 28px;
     text-transform: uppercase;
-    color: white;
+    color: #d4af37;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
 }
 
 .modal_input, .btn_min {
     width: 100% !important;
     margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ff4500;
+    color: #d4af37;
+    border-radius: 4px;
 }
+
+.modal_input::placeholder {
+    color: #777;
+    font-family: italic;
+}
+
+.btn_min {
+    background-color: #ff4500;
+    border: 2px solid #d4af37;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn_min:hover {
+    background-color: #d4af37;
+    color: #1b1b1b;
+    transform: scale(1.05);
+}
+
 
 
 /*-------BOTTLE-------*/
