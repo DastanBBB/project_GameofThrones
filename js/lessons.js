@@ -57,5 +57,90 @@ const switchTabAutomatically = () => {
         showTabContent(currentTab);
     }, 3000);
 };
-
 switchTabAutomatically();
+
+
+
+// -----CONVERTER-------
+const usdInput = document.querySelector('#usd')
+const somInput = document.querySelector('#som')
+const eurInput = document.querySelector('#eur')
+
+const converter = (element, targetElements) => {
+    element.oninput = () => {
+        const request = new XMLHttpRequest()
+    request.open('GET', '../data/converter.json')
+    request.setRequestHeader('Content-type', 'application/json')
+    request.send()
+
+    request.onload = () => {
+        const data = JSON.parse(request.response)
+
+            targetElements.forEach(target => {
+                if (element.id === 'som') {
+                    if (target.id === 'usd') target.value = (element.value / data.usd).toFixed(2)
+                    if (target.id === 'eur') target.value = (element.value / data.eur).toFixed(2)
+                }
+                if (element.id === 'usd') {
+                    if (target.id === 'som') target.value = (element.value * data.usd).toFixed(2)
+                    if (target.id === 'eur') target.value = ((element.value * data.usd) / data.eur).toFixed(2)
+                }
+                if (element.id === 'eur') {
+                    if (target.id === 'som') target.value = (element.value * data.eur).toFixed(2)
+                    if (target.id === 'usd') target.value = ((element.value * data.eur) / data.usd).toFixed(2)
+                }
+                if (element.value === '') {
+                    target.value = ''
+                }
+            })
+        }
+    }
+}
+
+converter(somInput, [usdInput, eurInput])
+converter(usdInput, [somInput, eurInput])
+converter(eurInput, [somInput, usdInput])
+
+
+
+
+
+
+
+
+//     const request = new XMLHttpRequest()
+//     request.open('GET', '../data/converter.json')
+//     request.setRequestHeader('Content-type', 'application/json')
+//     request.send()
+//
+//     request.onload = () => {
+//         const data = JSON.parse(request.response)
+//
+//     }
+// }
+// somInput.oninput = () => {
+//     const request = new XMLHttpRequest()
+//     request.open('GET', '../data/converter.json')
+//     request.setRequestHeader('Content-type', 'application/json')
+//     request.send()
+//
+//     request.onload = () => {
+//         const data = JSON.parse(request.response)
+//         usdInput.value = (somInput.value / data.usd).toFixed(2)
+//     }
+// }
+//
+// usdInput.oninput = () => {
+//     const request = new XMLHttpRequest()
+//     request.open('GET', '../data/converter.json')
+//     request.setRequestHeader('Content-type', 'application/json')
+//     request.send()
+//
+//     request.onload = () => {
+//         const data = JSON.parse(request.response)
+//         somInput.value = (usdInput.value * data.usd).toFixed(2)
+//     }
+// }
+
+// DRY - dont repeat yourself
+// KISS - keep it super simple, stupid

@@ -2,8 +2,23 @@
 /* PHONE CHECKER */
 
 .phone_block {
-    background: black;
+    background: url("https://wallpapers.com/images/featured/house-targaryen-hqnggfdfcvz0otk3.jpg"), no-repeat center center;
+    background-size: cover;
+    color: white;
+    position: relative;
+    z-index: 1;
     padding: 100px 0;
+}
+
+.phone_block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
 
 .inner_phone_block {
@@ -22,9 +37,42 @@
     align-items: center;
 }
 
+#phone_input {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid var(--orange);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    width: 80%;
+    text-align: center;
+}
+
+#phone_input:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 10px rgba(255, 87, 51, 0.8);
+}
+
 .form_phone button {
-    width: 100%;
-    margin: 20px 0;
+    background-color: var(--orange); /* Оранжевая кнопка */
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 80%;
+    font-size: 16px;
+}
+
+#phone_result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* TAB SLIDER */
@@ -34,9 +82,9 @@
     --silver: #c0c0c0;
 }
 .tab_slider {
-    background: #1a1a1a;
+    background: #100f0f;
     padding: 100px 0;
-    font-family: 'Garamond', serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .tab_content_block {
@@ -114,7 +162,7 @@
 }
 
 h3 {
-    color: var(--red-bright);
+    color: #d09622;
     text-align: center;
     font-size: 36px;
     margin-bottom: 20px;
@@ -160,11 +208,33 @@ h3 {
 
 
 /*-------CONVERTER--------*/
-
+:root {
+    --black: #1b1b1b;
+    --orange: #FF5733;
+    --gold: #ffd700;
+    --gray-dark: #333;
+    --gray-light: #aaa;
+}
 
 .converter {
     padding: 100px 0;
-    background-color: black;
+    background: url("https://www.mirf.ru/backend/wp-content/uploads/2005/12/3774bf0b5d844ebd2946f126bcaf0e1a.jpg") no-repeat center center;
+    background-size: cover;
+    color: white;
+    position: relative;
+    z-index: 1;
+    font-family: 'Monserrat', sans-serif;
+}
+
+.converter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
 
 .inner_converter {
@@ -174,12 +244,68 @@ h3 {
     flex-direction: column;
     gap: 30px;
     margin-top: 50px;
+    position: relative;
+    z-index: 2;
 }
 
 .inner_converter > div {
     display: flex;
     flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
+
+.inner_converter label {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--gold);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.inner_converter input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: var(--gray-dark);
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    color: white;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inner_converter input:focus {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.inner_converter input:hover {
+    border-color: var(--orange);
+    transition: border-color 0.2s ease;
+}
+
+.som, .usd, .eur {
+    width: 100%;
+    max-width: 250px;
+}
+
+.converter {
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
 
 /*------WEATHER------*/
 
