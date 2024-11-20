@@ -102,12 +102,6 @@ converter(usdInput, [somInput, eurInput])
 converter(eurInput, [somInput, usdInput])
 
 
-
-
-
-
-
-
 //     const request = new XMLHttpRequest()
 //     request.open('GET', '../data/converter.json')
 //     request.setRequestHeader('Content-type', 'application/json')
@@ -141,6 +135,47 @@ converter(eurInput, [somInput, usdInput])
 //         somInput.value = (usdInput.value * data.usd).toFixed(2)
 //     }
 // }
-
 // DRY - dont repeat yourself
 // KISS - keep it super simple, stupid
+
+
+// ----CARD SWITCHER-----
+const nextButton = document.querySelector('#btn-next')
+const prevButton = document.querySelector('#btn-prev')
+const cardBlock = document.querySelector('.card')
+const max_index = 200;
+let cardIndex = 1;
+
+// применяю принцип DRY and KISS
+
+const loadCard = (index) => {
+    fetch(` https://jsonplaceholder.typicode.com/todos/${cardIndex}`)
+        .then((response) => response.json())
+        .then((data) => {
+            cardBlock.innerHTML = `
+                <p>${data.title}</p>
+                <p>${data.completed}</p>
+                <span>${data.id}</span>
+            `
+        })
+}
+
+nextButton.onclick = () => {
+    cardIndex = cardIndex === max_index ? 1: cardIndex + 1; // с последней на первую карточку
+    loadCard(cardIndex);
+}
+
+prevButton.onclick = () => {
+    cardIndex = cardIndex === 1 ? max_index: cardIndex - 1; // с первой на последную карточку
+    loadCard(cardIndex);
+}
+
+loadCard(cardIndex);
+
+
+// ------fetch-запрос на 'https://jsonplaceholder.typicode.com/posts'------
+fetch(`https://jsonplaceholder.typicode.com/posts`)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Posts', data);
+    })
