@@ -1,0 +1,138 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    padding: 50px;
+    margin: 0 auto;
+    background-color: #0a0909;
+}
+
+.great-houses {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 100%;
+    gap: 15px;
+    background: rgba(3, 3, 3, 0.5);
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.cards-houses {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+}
+
+.houses-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+
+.house-card {
+    background: linear-gradient(145deg, rgba(0, 0, 10, 0.8), rgba(0, 50, 100, 0.5));
+    border-radius: 12px;
+    margin: 20px;
+    padding: 20px;
+    width: 520px;
+    height: 630px;
+    backdrop-filter: blur(10px) brightness(0.8);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 100, 200, 0.5);
+    transition: transform 0.3s ease-in-out, background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.house-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: linear-gradient(145deg, rgba(0, 70, 140, 0.8), rgba(10, 80, 180, 0.5));
+    box-shadow: 0 0 30px rgba(0, 200, 255, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.house-image {
+    width: 100%;
+    height: 430px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    animation: frostEffect 3s infinite alternate;
+}
+
+.house-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 50, 0.4);
+    backdrop-filter: blur(5px);
+    border-radius: inherit;
+    z-index: 1;
+}
+
+.house-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: inherit;
+    z-index: 2;
+}
+
+.house-card h3 {
+    color: rgba(200, 240, 255, 0.9);
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.house-card p {
+    color: rgba(180, 230, 255, 0.8);
+    font-size: 14px;
+    line-height: 1.6;
+    text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+}
+
+.house-card::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 200, 255, 0.4);
+    opacity: 0;
+    animation: icyGlow 5s infinite ease-in-out;
+}
+
+@keyframes icyGlow {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+.great-houses h2 {
+    color: #d4af37;
+    padding: 25px 0;
+}
+
+

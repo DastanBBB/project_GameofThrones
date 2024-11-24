@@ -79,7 +79,6 @@ function startCounter() {
         }, 1000);
     }
 }
-
 // Остановка счетчика
 function stopCounter() {
     clearInterval(intervalId);
@@ -98,70 +97,68 @@ resetButton.addEventListener('click', resetCounter);
 
 
 
-// ---------XMLHttpRequest-------------
-const xhr = new XMLHttpRequest();
+// -------XMLHttpRequest---->and new async/await request
+const fetchKingdomsData = async () => {
+    try {
+        const response = await fetch('/data/any.json');
+        if (!response.ok) {
+            throw new   Error(`HTTP Error: ${response.status}`);
+        }
+        const data = await response.json()
 
-xhr.open('GET', '/data/any.json', true);
-
-xhr.onload = function () {
-    if (xhr.status === 200) {
-        const data = JSON.parse(xhr.responseText); // Парсим json
-
-    data.kingdoms.forEach(kingdom => {
-        console.log(`Королевство: ${kingdom.name}`);
-        console.log(`Правитель: ${kingdom.ruler}`);
-        console.log(`Столица: ${kingdom.capital}`);
-        console.log(`Девиз: ${kingdom.motto}`);
-        console.log('----------------------------');
-    });
-} else {
-    console.error('ERROR')
-}
+        data.kingdoms.forEach(kingdom => {
+            console.log(`Королевство: ${kingdom.name}`);
+            console.log(`Правитель: ${kingdom.ruler}`);
+            console.log(`Столица: ${kingdom.capital}`);
+            console.log(`Девиз: ${kingdom.motto}`);
+            console.log('----------------------------');
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке данных:', error);
+    }
 };
 
-xhr.send();
+fetchKingdomsData();
 
 
 
 // ---------Request to show cards----------
-window.onload = function() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/data/characters.json', true);
-
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            const data = JSON.parse(xhr.responseText);
-            const characters = data.characters;  // Извлекаем массив персонажей
-
-            const charactersList = document.getElementById('characters-list');
-
-            // Динамическое создание карточек для каждого персонажа
-            characters.forEach(character => {
-                const card = document.createElement('div');
-                card.classList.add('character-card');
-
-                card.innerHTML = `
-                    <div class="character-photo">
-                        <img src="${character.person_photo}" alt="${character.name}">
-                    </div>
-                    <h4>${character.name}</h4>
-                    <p><strong>Age:</strong> ${character.age}</p>
-                    <p><strong>Family:</strong> ${character.family}</p>
-                    <p><strong>House:</strong> ${character.house}</p>
-                    <p><strong>Title:</strong> ${character.title}</p>
-                    <p><strong>Birthplace:</strong> ${character.birthplace}</p>
-                    <p><strong>Bio:</strong> ${character.bio}</p>
-                `;
-
-                charactersList.appendChild(card);
-            });
-        } else {
-            console.error('Failed to load characters.json');
+window.onload = async function () {
+    try {
+        const response = await fetch('/data/characters.json');
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
         }
-    };
+        const data = await response.json();
+        const characters = data.characters;
 
-    xhr.send();
+        const charactersList = document.getElementById('characters-list');
+
+        // Динамическое создание карточек для каждого персонажа
+        characters.forEach(character => {
+            const card = document.createElement('div');
+            card.classList.add('character-card');
+
+            card.innerHTML = `
+                <div class="character-photo">
+                    <img src="${character.person_photo}" alt="${character.name}">
+                </div>
+                <h4>${character.name}</h4>
+                <p><strong>Age:</strong> ${character.age}</p>
+                <p><strong>Family:</strong> ${character.family}</p>
+                <p><strong>House:</strong> ${character.house}</p>
+                <p><strong>Title:</strong> ${character.title}</p>
+                <p><strong>Birthplace:</strong> ${character.birthplace}</p>
+                <p><strong>Bio:</strong> ${character.bio}</p>
+            `;
+
+            charactersList.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке json:', error);
+    }
 };
+
 
 
 

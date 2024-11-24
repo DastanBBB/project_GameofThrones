@@ -1,5 +1,4 @@
 // PHONE CHECKER
-
 const phoneInput = document.querySelector('#phone_input');
 const phoneButton = document.querySelector('#phone_button');
 const phoneResult = document.querySelector('#phone_result');
@@ -55,7 +54,7 @@ const switchTabAutomatically = () => {
         currentTab = (currentTab + 1) % tabs.length;
         hideTabContent()
         showTabContent(currentTab);
-    }, 3000);
+    }, 5000);
 };
 switchTabAutomatically();
 
@@ -67,14 +66,10 @@ const somInput = document.querySelector('#som')
 const eurInput = document.querySelector('#eur')
 
 const converter = (element, targetElements) => {
-    element.oninput = () => {
-        const request = new XMLHttpRequest()
-    request.open('GET', '../data/converter.json')
-    request.setRequestHeader('Content-type', 'application/json')
-    request.send()
-
-    request.onload = () => {
-        const data = JSON.parse(request.response)
+    element.oninput = async () => {
+        try {
+            const response = await fetch('../data/converter.json');
+            const data = await response.json();
 
             targetElements.forEach(target => {
                 if (element.id === 'som') {
@@ -92,54 +87,20 @@ const converter = (element, targetElements) => {
                 if (element.value === '') {
                     target.value = ''
                 }
-            })
+            });
+        } catch (error) {
+            console.error('Ошибка при загрузке данных')
         }
     }
-}
+};
 
 converter(somInput, [usdInput, eurInput])
 converter(usdInput, [somInput, eurInput])
 converter(eurInput, [somInput, usdInput])
 
 
-//     const request = new XMLHttpRequest()
-//     request.open('GET', '../data/converter.json')
-//     request.setRequestHeader('Content-type', 'application/json')
-//     request.send()
-//
-//     request.onload = () => {
-//         const data = JSON.parse(request.response)
-//
-//     }
-// }
-// somInput.oninput = () => {
-//     const request = new XMLHttpRequest()
-//     request.open('GET', '../data/converter.json')
-//     request.setRequestHeader('Content-type', 'application/json')
-//     request.send()
-//
-//     request.onload = () => {
-//         const data = JSON.parse(request.response)
-//         usdInput.value = (somInput.value / data.usd).toFixed(2)
-//     }
-// }
-//
-// usdInput.oninput = () => {
-//     const request = new XMLHttpRequest()
-//     request.open('GET', '../data/converter.json')
-//     request.setRequestHeader('Content-type', 'application/json')
-//     request.send()
-//
-//     request.onload = () => {
-//         const data = JSON.parse(request.response)
-//         somInput.value = (usdInput.value * data.usd).toFixed(2)
-//     }
-// }
-// DRY - dont repeat yourself
-// KISS - keep it super simple, stupid
 
-
-// ----CARD SWITCHER-----
+// ------CARD SWITCHER------
 const nextButton = document.querySelector('#btn-next')
 const prevButton = document.querySelector('#btn-prev')
 const cardBlock = document.querySelector('.card')
@@ -148,16 +109,18 @@ let cardIndex = 1;
 
 // применяю принцип DRY and KISS
 
-const loadCard = (index) => {
-    fetch(` https://jsonplaceholder.typicode.com/todos/${cardIndex}`)
-        .then((response) => response.json())
-        .then((data) => {
-            cardBlock.innerHTML = `
-                <p>${data.title}</p>
-                <p>${data.completed}</p>
-                <span>${data.id}</span>
-            `
-        })
+const loadCard =  async (index) => {
+    try {
+        const response = await fetch(` https://jsonplaceholder.typicode.com/todos/${cardIndex}`)
+        const data = await response.json()
+        cardBlock.innerHTML = `
+        <p>${data.title}</p>
+        <p>${data.completed}</p>
+         <span>${data.id}</span>
+    `
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 nextButton.onclick = () => {
@@ -173,9 +136,63 @@ prevButton.onclick = () => {
 loadCard(cardIndex);
 
 
-// ------fetch-запрос на 'https://jsonplaceholder.typicode.com/posts'------
-fetch(`https://jsonplaceholder.typicode.com/posts`)
-    .then((response) => response.json())
-    .then((data) => {
+
+// ------async-await запрос на 'https://jsonplaceholder.typicode.com/posts'------
+
+const url = 'https://jsonplaceholder.typicode.com/posts'
+const fetchPosts = async () => {
+    try {
+        const response = await  fetch(`${url}`);
+        const data = await response.json();
         console.log('Posts', data);
-    })
+    } catch (error) {
+        console.error('Error posts:', error);
+    }
+};
+fetchPosts();
+
+
+
+// -----Weather------
+// query params - параметры запроса
+
+const searchButton= document.querySelector('#search')
+const searchInput = document.querySelector('.cityName')
+const city = document.querySelector('.city')
+const temp = document.querySelector('.temp')
+
+const APP_ID = 'e417df62e04d3b1b111abeab19cea714'
+const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather'
+
+searchButton.onclick =  async () => {
+    try {
+        const response = await  fetch(`${BASE_URL}?appid=${APP_ID}&q=${searchInput.value}&units=metric`)
+        const data = await response.json()
+        city.innerHTML = data.name || 'City is not find'
+        temp.innerHTML = `
+         <span>${data.main?.temp ? Math.round(data.main?.temp) + '&deg;C' : 'Not correct name'}</span>
+         <img src="https://openweathermap.org/img/w/${data.weather[0].icon}.png" alt="">
+    `
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
+
+
+
+
+// optional chaining - опциональная цепочка
+// ?.
+// const address = {
+//     id: 123,
+//     street: {
+//         name: "Ibraimova",
+//         number: 103
+//     }
+// }
+
+
+
